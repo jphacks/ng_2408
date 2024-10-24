@@ -1,0 +1,32 @@
+name: auto-deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-upload:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ssh and deploy
+        uses: appleboy/ssh-action@master # １
+        with: # 2 アクションの入力パラメータを指定
+          host: ${{ secrets.SSH_HOST }} # ホスト名
+          username: ${{ secrets.SSH_USERNAME }} # SSH ユーザ名
+          key: ${{ secrets.SSH_PRIVATE_KEY }} # 秘密鍵の内容
+          port: ${{ secrets.SSH_PORT }} # ポート番号
+          debug: true
+          script: |
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+            [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+            cd ~/ng_2408
+            git pull origin main
+            npm install --prefix frontend
+            npm run build --prefix frontend
+            pm2 restart next
+            npm install --prefix backend
+            npm run build --prefix backend
+            pm2 restart express
