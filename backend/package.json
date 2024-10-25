@@ -16,6 +16,11 @@
     "socket.io": "^4.8.0"
   },
   "devDependencies": {
+    "eslint": "^8",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-universe": "^13.0.0",
+    "eslint-plugin-unused-imports": "^4.1.4",
+    "prettier": "^3.3.3",
     "@types/cookie-parser": "^1.4.7",
     "@types/debug": "^4.1.12",
     "@types/express": "^5.0.0",
