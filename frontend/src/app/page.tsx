@@ -7,7 +7,7 @@ import io, { Socket } from "socket.io-client";
 let socket: Socket;
 
 export default function WebSocketPage() {
-  const [message, setMessage] = useState<string | null>(null);
+  const [messageList, setMessageList] = useState<string[]>([]);
   const [input, setInput] = useState<string>("");
 
   useEffect(() => {
@@ -37,7 +37,7 @@ export default function WebSocketPage() {
 
     // 'message' イベントをリッスンして、メッセージを受信
     socket.on("message", (data: string) => {
-      setMessage(data);
+      setMessageList((prev) => [...prev, data]);
     });
 
     // クリーンアップ時にソケットを切断
@@ -59,7 +59,9 @@ export default function WebSocketPage() {
       <h1>WebSocket Client</h1>
       <div>
         <label>Received Message: </label>
-        <span>{message ? message : "No message yet"}</span>
+        {messageList.map((message, index) => (
+          <p key={index}>{message}</p>
+        ))}
       </div>
       <div>
         <input
@@ -67,6 +69,11 @@ export default function WebSocketPage() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Enter a message"
+          onKeyPress={(e) => {
+            if (e.key === "Enter") {
+              sendMessage(); // Enterキーが押されたときにメッセージを送信
+            }
+          }}
         />
         <button onClick={sendMessage}>Send</button>
       </div>
