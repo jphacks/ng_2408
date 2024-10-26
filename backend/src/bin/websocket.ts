@@ -28,8 +28,9 @@ export default function createWebsocketServer(httpServer: HttpServer) {
     console.log("A user connected");
 
     socket.on("disconnect", () => {
-      emitUpdate(io, users[socket.id].groupId);
+      const groupId = users[socket.id].groupId;
       removeUser(socket.id);
+      emitUpdate(io, groupId);
       console.log("User disconnected");
     });
 
