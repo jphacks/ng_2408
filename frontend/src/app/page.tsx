@@ -38,18 +38,20 @@ export default function WebSocketPage() {
         const name = "noname";
         const position = { latitude, longitude };
         socket.emit("init", { name, position }); // 'init' イベントで送信
-        console.log(
-          "Sent location data to server : " + { latitude, longitude }
-        );
+        console.log("Sent location data to server:", latitude, longitude);
       } catch (err) {
         console.error(err);
       }
     });
 
     // 'message' イベントをリッスンして、メッセージを受信
-    socket.on("message", (data: string) => {
-      setMessageList((prev) => [...prev, data]);
-    });
+    socket.on(
+      "message",
+      (name: string, addressHash: string, format: string, message: string) => {
+        console.log("Received message: ", message);
+        setMessageList((prev) => [...prev, message]);
+      }
+    );
 
     // クリーンアップ時にソケットを切断
     return () => {
