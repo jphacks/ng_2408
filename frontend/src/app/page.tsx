@@ -8,13 +8,12 @@ import { useLayoutEffect, useRef, useState } from "react";
 import io, { Socket } from "socket.io-client";
 import Bubble from "@/components/Bubble/Bubble";
 import styles from "./page.module.scss";
+import { MessageInterface } from "@/types/interface";
 
 let socket: Socket;
 
 export default function WebSocketPage() {
-  const [messageList, setMessageList] = useState<[string, string, string][]>(
-    []
-  );
+  const [messageList, setMessageList] = useState<MessageInterface[]>([]);
   const [modalClosed, setModalClosed] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
   const [names, setNames] = useState<string[]>([]);
@@ -56,9 +55,25 @@ export default function WebSocketPage() {
     // 'message' イベントをリッスンして、メッセージを受信
     socket.on(
       "message",
-      (name: string, addressHash: string, format: string, message: string) => {
-        console.log("Received messages: ", name, addressHash, message);
-        setMessageList((prev) => [...prev, [name, addressHash, message]]); // TODO: formatも追加
+      (
+        senderName: string,
+        addressHash: string,
+        format: string,
+        message: string,
+        isSelfMessage: boolean
+      ) => {
+        console.log(
+          "Received messages: ",
+          senderName,
+          addressHash,
+          format,
+          message,
+          isSelfMessage
+        );
+        setMessageList((prev) => [
+          ...prev,
+          { senderName, addressHash, format, message, isSelfMessage },
+        ]);
       }
     );
 
@@ -87,13 +102,8 @@ export default function WebSocketPage() {
         ))}
         <div>
           <h2>Received Messages: </h2>
-          {messageList.map(([senderName, addressHash, message], index) => (
-            <Bubble
-              key={index}
-              senderName={senderName}
-              addressHash={addressHash}
-              message={message}
-            />
+          {messageList.map((bubble, index) => (
+            <Bubble key={index} bubble={bubble} />
           ))}
           <div ref={scrollBottomRef} />
         </div>
