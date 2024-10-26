@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"; // クライアントサイドで実行されることを明示する
 
+import SendForm from "@/components/SendForm/SendForm";
 import NestedModal from "@/components/Modal/NestedModal";
 import { getCurrentPosition } from "@/utils/geolocation";
 import { useEffect, useState } from "react";
@@ -9,7 +11,6 @@ let socket: Socket;
 
 export default function WebSocketPage() {
   const [messageList, setMessageList] = useState<string[]>([]);
-  const [input, setInput] = useState<string>("");
   const [modalClosed, setModalClosed] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
 
@@ -56,42 +57,20 @@ export default function WebSocketPage() {
     };
   }, []);
 
-  // サーバーにメッセージを送信する関数
-  const sendMessage = () => {
-    if (socket && input.trim() !== "") {
-      socket.emit("message", input); // 'message' イベントで送信
-      setInput("");
-    }
-  };
-
   return (
-    <div>
+    <>
       <NestedModal
         setModalClosed={setModalClosed}
         setName={setName}
         name={name}
       />
-      <h1>WebSocket Client</h1>
       <div>
         <label>Received Message: </label>
         {messageList.map((message, index) => (
           <p key={index}>{message}</p>
         ))}
       </div>
-      <div>
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Enter a message"
-          onKeyPress={(e) => {
-            if (e.key === "Enter") {
-              sendMessage(); // Enterキーが押されたときにメッセージを送信
-            }
-          }}
-        />
-        <button onClick={sendMessage}>Send</button>
-      </div>
-    </div>
+      <SendForm socket={socket}></SendForm>
+    </>
   );
 }

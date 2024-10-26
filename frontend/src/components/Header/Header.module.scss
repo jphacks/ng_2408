@@ -9,6 +9,8 @@
 }
 
 .navigationContainer {
+  box-sizing: border-box;
+  height: var(--header-height);
   padding: 8px 0 6px 0;
   background-color: #f8f8f8;
   box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.15);

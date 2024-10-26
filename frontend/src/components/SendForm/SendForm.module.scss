@@ -1,0 +1,8 @@
+.sendForm {
+  display: flex;
+  margin: 3px auto 10px auto;
+  input {
+    width: min(70vw, 400px);
+    margin-right: 5px;
+  }
+}
