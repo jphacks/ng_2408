@@ -32,7 +32,7 @@ export default function SendForm({ socket }: SendFormProps) {
           }
         }}
       />
-      <button onClick={sendMessage}>Send</button>
+      <button onClick={sendMessage}>送信</button>
     </div>
   );
 }
