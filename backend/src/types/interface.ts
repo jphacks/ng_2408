@@ -7,4 +7,5 @@ export interface User {
   name: string;
   position: Position;
   groupId: number;
+  addressHash: string;
 }
