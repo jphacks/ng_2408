@@ -23,10 +23,17 @@ export default function WebSocketPage() {
       console.log("Connected to WebSocket server");
 
       try {
-        const location = await getCurrentPosition();
-        const latitude = location?.coords.latitude;
-        const longitude = location?.coords.longitude;
-        socket.emit("init", { latitude, longitude }); // 'init' イベントで送信
+        const currentPosition = await getCurrentPosition();
+        const latitude = currentPosition?.coords.latitude;
+        const longitude = currentPosition?.coords.longitude;
+
+        if (!latitude || !longitude) {
+          throw new Error("Failed to get location data");
+        }
+
+        const name = "noname";
+        const position = { latitude, longitude };
+        socket.emit("init", { name, position }); // 'init' イベントで送信
         console.log(
           "Sent location data to server : " + { latitude, longitude }
         );
