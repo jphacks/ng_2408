@@ -1,7 +1,7 @@
 import { Position, User } from "../types/interface.js";
 
 export const users: Record<string, User> = {};
-const groups: Record<number, string[]> = {};
+export const groups: Record<number, string[]> = {};
 
 export const setUser = (socketId: string, user: User) => {
   users[socketId] = user;

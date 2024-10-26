@@ -4,8 +4,10 @@ import { Position, User } from "../types/interface.js";
 import {
   createGroup,
   getLocalUser,
+  groups,
   removeUser,
   setUser,
+  users,
 } from "../utils/users.js";
 
 export default function createWebsocketServer(httpServer: HttpServer) {
@@ -54,7 +56,16 @@ export default function createWebsocketServer(httpServer: HttpServer) {
 
     socket.on("message", (message) => {
       console.log("Received message: ", message);
-      io.emit("message", message);
+      console.log("user id: ", socket.id);
+      console.log("group id: ", users[socket.id].groupId);
+
+      groups[users[socket.id].groupId].forEach((socketId: string) => {
+        const name = users[socket.id].name;
+        const addressHash = "TODO: implement addressHash";
+        const format = "text";
+        console.log(socketId);
+        io.to(socketId).emit("message", name, addressHash, format, message);
+      });
     });
   });
 

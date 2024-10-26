@@ -47,9 +47,14 @@ export default function WebSocketPage() {
     });
 
     // 'message' イベントをリッスンして、メッセージを受信
-    socket.on("message", (data: string) => {
-      setMessageList((prev) => [...prev, data]);
-    });
+    socket.on(
+      "message",
+      (name: string, addressHash: string, format: string, message: string) => {
+        console.log("ok");
+        console.log("Received message: ", message);
+        setMessageList((prev) => [...prev, message]);
+      }
+    );
 
     // クリーンアップ時にソケットを切断
     return () => {
