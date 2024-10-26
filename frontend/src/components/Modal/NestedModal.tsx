@@ -57,6 +57,9 @@ export default function NestedModal({
           <h3 id="parent-modal-title" style={{ marginBottom: "0.5em" }}>
             ニックネームを入力してください
           </h3>
+          <p style={{ color: "#757575", margin: 0 }}>
+            メッセージ画面では名前の横にユーザー固有IDが付与されます
+          </p>
           <TextField
             label="Nickname"
             value={name}
@@ -65,6 +68,7 @@ export default function NestedModal({
             fullWidth
             margin="normal"
           />
+          <p style={{ color: "#757575", margin: 0 }}>ex. お名前#a1b2</p>
           <Button
             className={styles.modalButton}
             onClick={handleClose}
