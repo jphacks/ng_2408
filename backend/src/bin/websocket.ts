@@ -9,6 +9,7 @@ import {
   setUser,
   users,
 } from "../utils/users.js";
+import { hashIPAddress } from "../utils/hash.js";
 
 const emitUpdate = (io: Server, groupId: number) => {
   io.emit(
@@ -53,10 +54,14 @@ export default function createWebsocketServer(httpServer: HttpServer) {
           groupId = localUser.groupId;
         }
 
+        const ip = socket.handshake.address;
+        const addressHash = hashIPAddress(ip);
+
         const user: User = {
           name,
           position,
           groupId,
+          addressHash: addressHash,
         };
 
         setUser(socket.id, user);
@@ -72,7 +77,7 @@ export default function createWebsocketServer(httpServer: HttpServer) {
 
       groups[users[socket.id].groupId].forEach((socketId: string) => {
         const name = users[socket.id].name;
-        const addressHash = "TODO: implement addressHash";
+        const addressHash = users[socket.id].addressHash;
         const format = "text";
         console.log(socketId);
         io.to(socketId).emit("message", name, addressHash, format, message);
