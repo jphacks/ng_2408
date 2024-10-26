@@ -6,9 +6,8 @@ export default function Bubble({ bubble }: { bubble: MessageInterface }) {
   return (
     <p>
       <span className={styles.name}>{bubble.senderName}</span>
-      <span className={styles.hash}>
-        #{bubble.addressHash.slice(0, 4)}
-      </span>: {bubble.message}
+      <span className={styles.hash}>#{bubble.addressHash.slice(0, 4)}</span>:
+      <span className={styles.message}>{bubble.message}</span>
     </p>
   );
 }
