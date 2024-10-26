@@ -8,7 +8,7 @@ import io, { Socket } from "socket.io-client";
 let socket: Socket;
 
 export default function WebSocketPage() {
-  const [message, setMessage] = useState<string | null>(null);
+  const [messageList, setMessageList] = useState<string[]>([]);
   const [input, setInput] = useState<string>("");
   const [modalClosed, setModalClosed] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
@@ -26,10 +26,17 @@ export default function WebSocketPage() {
       console.log("Connected to WebSocket server");
 
       try {
-        const location = await getCurrentPosition();
-        const latitude = location?.coords.latitude;
-        const longitude = location?.coords.longitude;
-        socket.emit("init", { latitude, longitude }); // 'init' イベントで送信
+        const currentPosition = await getCurrentPosition();
+        const latitude = currentPosition?.coords.latitude;
+        const longitude = currentPosition?.coords.longitude;
+
+        if (!latitude || !longitude) {
+          throw new Error("Failed to get location data");
+        }
+
+        const name = "noname";
+        const position = { latitude, longitude };
+        socket.emit("init", { name, position }); // 'init' イベントで送信
         console.log(
           "Sent location data to server : " + { latitude, longitude }
         );
@@ -40,7 +47,7 @@ export default function WebSocketPage() {
 
     // 'message' イベントをリッスンして、メッセージを受信
     socket.on("message", (data: string) => {
-      setMessage(data);
+      setMessageList((prev) => [...prev, data]);
     });
 
     // クリーンアップ時にソケットを切断
@@ -67,7 +74,9 @@ export default function WebSocketPage() {
       <h1>WebSocket Client</h1>
       <div>
         <label>Received Message: </label>
-        <span>{message ? message : "No message yet"}</span>
+        {messageList.map((message, index) => (
+          <p key={index}>{message}</p>
+        ))}
       </div>
       <div>
         <input
@@ -75,6 +84,11 @@ export default function WebSocketPage() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Enter a message"
+          onKeyPress={(e) => {
+            if (e.key === "Enter") {
+              sendMessage(); // Enterキーが押されたときにメッセージを送信
+            }
+          }}
         />
         <button onClick={sendMessage}>Send</button>
       </div>

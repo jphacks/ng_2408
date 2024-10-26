@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "@/styles/style.scss";
 import React from "react";
+import Header from "@/components/Header/Header";
 
 export const metadata: Metadata = {
   title: "websocket sample",
@@ -15,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body>
-        <header>header</header>
+        <Header />
         <main>{children}</main>
         <footer>footer</footer>
       </body>
