@@ -10,6 +10,7 @@ let socket: Socket;
 export default function WebSocketPage() {
   const [message, setMessage] = useState<string | null>(null);
   const [input, setInput] = useState<string>("");
+  const [modalClosed, setModalClosed] = useState<boolean>(false);
 
   useEffect(() => {
     // 本番環境と開発環境で WebSocket サーバーの URL を変更する
@@ -57,7 +58,7 @@ export default function WebSocketPage() {
 
   return (
     <div>
-      <NestedModal />
+      <NestedModal setModalClosed={setModalClosed} />
       <h1>WebSocket Client</h1>
       <div>
         <label>Received Message: </label>

@@ -1,7 +1,9 @@
+// NestedModal.tsx
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
+import styles from "./NestedModal.module.scss";
 
 const style = {
   position: "absolute",
@@ -17,40 +19,15 @@ const style = {
   pb: 3,
 };
 
-function ChildModal() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  return (
-    <React.Fragment>
-      <Button onClick={handleOpen}>Open Child Modal</Button>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="child-modal-title"
-        aria-describedby="child-modal-description"
-      >
-        <Box sx={{ ...style, width: 200 }}>
-          <h2 id="child-modal-title">Text in a child modal</h2>
-          <p id="child-modal-description">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-          </p>
-          <Button onClick={handleClose}>Close Child Modal</Button>
-        </Box>
-      </Modal>
-    </React.Fragment>
-  );
+interface NestedModalProps {
+  setModalClosed: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function NestedModal() {
+export default function NestedModal({ setModalClosed }: NestedModalProps) {
   const [open, setOpen] = React.useState(true);
   const handleClose = () => {
     setOpen(false);
+    setModalClosed((prev) => !prev);
   };
 
   return (
