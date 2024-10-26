@@ -69,6 +69,11 @@ export default function WebSocketPage() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Enter a message"
+          onKeyPress={(e) => {
+            if (e.key === "Enter") {
+              sendMessage(); // Enterキーが押されたときにメッセージを送信
+            }
+          }}
         />
         <button onClick={sendMessage}>Send</button>
       </div>
