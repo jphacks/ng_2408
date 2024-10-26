@@ -47,7 +47,7 @@ export default function NestedModal({
         <Box
           className={styles.modalBox}
           style={{
-            width: "90vw",
+            width: "min(90vw, 600px)",
             boxSizing: "border-box",
             padding: "16px 22px 15px",
             border: "none",
