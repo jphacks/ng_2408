@@ -3,16 +3,22 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import styles from "./NestedModal.module.scss"; // スタイルモジュールをインポート
+import styles from "./NestedModal.module.scss";
 
 interface NestedModalProps {
   setModalClosed: React.Dispatch<React.SetStateAction<boolean>>;
+  setName: React.Dispatch<React.SetStateAction<string>>;
+  name: string;
 }
 
-export default function NestedModal({ setModalClosed }: NestedModalProps) {
+export default function NestedModal({
+  setModalClosed,
+  setName,
+  name,
+}: NestedModalProps) {
   const [open, setOpen] = React.useState(true);
-  const [name, setName] = React.useState(""); // 名前の状態を追加
 
+  //モーダルを閉じる
   const handleClose = () => {
     setOpen(false);
     setModalClosed((prev) => !prev);
@@ -22,6 +28,12 @@ export default function NestedModal({ setModalClosed }: NestedModalProps) {
     setName(e.target.value);
   };
 
+  //エンターキーで名前決定
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && name !== "") {
+      handleClose();
+    }
+  };
   return (
     <div>
       <Modal
@@ -30,15 +42,20 @@ export default function NestedModal({ setModalClosed }: NestedModalProps) {
         aria-describedby="parent-modal-description"
       >
         <Box className={styles.modalBox}>
-          <h2 id="parent-modal-title">Enter NickName</h2>
+          <h2 id="parent-modal-title">ニックネームを入力してください</h2>
           <TextField
-            label="nickname"
+            label="Nickname"
             value={name}
             onChange={handleNameChange}
+            onKeyDown={handleKeyDown}
             fullWidth
             margin="normal"
           />
-          <Button className={styles.modalButton} onClick={handleClose}>
+          <Button
+            className={styles.modalButton}
+            onClick={handleClose}
+            disabled={name === ""}
+          >
             送信
           </Button>
         </Box>
