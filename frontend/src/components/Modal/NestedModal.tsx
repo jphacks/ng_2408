@@ -48,17 +48,13 @@ function ChildModal() {
 }
 
 export default function NestedModal() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
+  const [open, setOpen] = React.useState(true);
   const handleClose = () => {
     setOpen(false);
   };
 
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -70,7 +66,7 @@ export default function NestedModal() {
           <p id="parent-modal-description">
             Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
           </p>
-          <ChildModal />
+          <Button onClick={handleClose}>完了</Button>
         </Box>
       </Modal>
     </div>
