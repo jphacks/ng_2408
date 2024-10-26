@@ -1,5 +1,6 @@
 "use client"; // クライアントサイドで実行されることを明示する
 
+import NestedModal from "@/components/Modal/NestedModal";
 import { getCurrentPosition } from "@/utils/geolocation";
 import { useEffect, useState } from "react";
 import io, { Socket } from "socket.io-client";
@@ -56,6 +57,7 @@ export default function WebSocketPage() {
 
   return (
     <div>
+      <NestedModal />
       <h1>WebSocket Client</h1>
       <div>
         <label>Received Message: </label>
