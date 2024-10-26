@@ -8,3 +8,11 @@ export interface User {
   position: Position;
   groupId: number;
 }
+
+export interface MessageInterface {
+  senderName: string;
+  addressHash: string;
+  format: string;
+  message: string;
+  isSelfMessage: boolean;
+}

@@ -1,19 +1,10 @@
 import React from "react";
+import { MessageInterface } from "@/types/interface";
 
-interface BubbleProps {
-  senderName: string;
-  addressHash: string;
-  message: string;
-}
-
-export default function Bubble({
-  senderName,
-  addressHash,
-  message,
-}: BubbleProps) {
+export default function Bubble({ bubble }: { bubble: MessageInterface }) {
   return (
     <p>
-      {senderName} @{addressHash} : {message}
+      {bubble.senderName} @{bubble.addressHash}: {bubble.message}
     </p>
   );
 }
