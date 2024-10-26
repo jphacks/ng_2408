@@ -1,5 +1,7 @@
 import { Server } from "socket.io";
 import { Server as HttpServer } from "http";
+import { Position, User } from "../types/interface.js";
+import { createGroup, getLocalUser, setUser } from "../utils/users.js";
 
 export default function createWebsocketServer(httpServer: HttpServer) {
   const io = new Server(httpServer, {
@@ -17,8 +19,30 @@ export default function createWebsocketServer(httpServer: HttpServer) {
 
     socket.on(
       "init",
-      (location: { latitude?: number; longtitude?: number }) => {
-        console.log("Received location: ", location);
+      ({ name, position }: { name: string; position: Position }) => {
+        console.log("Received init: ", name, position);
+
+        if (!position.latitude || !position.longitude) {
+          console.log("Invalid position");
+          console.log("name: ", name);
+          return;
+        }
+
+        const localUser = getLocalUser(position);
+        let groupId;
+        if (!localUser) {
+          groupId = createGroup();
+        } else {
+          groupId = localUser.groupId;
+        }
+
+        const user: User = {
+          name,
+          position,
+          groupId,
+        };
+
+        setUser(socket.id, user);
       }
     );
 
