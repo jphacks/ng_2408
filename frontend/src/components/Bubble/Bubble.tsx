@@ -1,8 +1,12 @@
 import React from "react";
-import { MessageInterface } from "@/types/interface";
+import { messageDownEventInterface } from "@/types/interface";
 import styles from "./Bubble.module.scss";
 
-export default function Bubble({ bubble }: { bubble: MessageInterface }) {
+export default function Bubble({
+  bubble,
+}: {
+  bubble: messageDownEventInterface;
+}) {
   return (
     <p>
       <span className={styles.name}>{bubble.senderName}</span>
