@@ -74,8 +74,16 @@ export default function createWebsocketServer(httpServer: HttpServer) {
         const name = users[socket.id].name;
         const addressHash = "TODO: implement addressHash";
         const format = "text";
+        const isSelfMessage = socketId === socket.id;
         console.log(socketId);
-        io.to(socketId).emit("message", name, addressHash, format, message);
+        io.to(socketId).emit(
+          "message",
+          name,
+          addressHash,
+          format,
+          message,
+          isSelfMessage
+        );
       });
     });
   });
