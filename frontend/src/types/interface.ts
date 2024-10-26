@@ -9,7 +9,7 @@ export interface User {
   addressHash: string;
 }
 export interface messageDownEventInterface {
-  senderName: string;
+  name: string;
   addressHash: string;
   format: string;
   message: string;

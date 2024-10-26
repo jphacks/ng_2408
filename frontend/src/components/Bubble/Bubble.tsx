@@ -9,7 +9,7 @@ export default function Bubble({
 }) {
   return (
     <p>
-      <span className={styles.name}>{bubble.senderName}</span>
+      <span className={styles.name}>{bubble.name}</span>
       <span className={styles.hash}>
         #{bubble.addressHash.slice(0, 4)}
       </span>: <span className={styles.message}>{bubble.message}</span>

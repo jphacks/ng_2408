@@ -66,7 +66,7 @@ export default function WebSocketPage() {
     socket.on(
       "message",
       ({
-        senderName,
+        name: senderName,
         addressHash,
         format,
         message,
@@ -82,7 +82,7 @@ export default function WebSocketPage() {
         );
         setMessageList((prev) => [
           ...prev,
-          { senderName, addressHash, format, message, isSelfMessage },
+          { name: senderName, addressHash, format, message, isSelfMessage },
         ]);
       }
     );
