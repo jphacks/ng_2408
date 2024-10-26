@@ -35,7 +35,7 @@ export default function NestedModal({
     }
   };
   return (
-    <div>
+    <>
       <Modal
         open={open}
         aria-labelledby="parent-modal-title"
@@ -60,6 +60,6 @@ export default function NestedModal({
           </Button>
         </Box>
       </Modal>
-    </div>
+    </>
   );
 }
