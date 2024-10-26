@@ -1,7 +1,12 @@
 import { Server } from "socket.io";
 import { Server as HttpServer } from "http";
 import { Position, User } from "../types/interface.js";
-import { createGroup, getLocalUser, setUser } from "../utils/users.js";
+import {
+  createGroup,
+  getLocalUser,
+  removeUser,
+  setUser,
+} from "../utils/users.js";
 
 export default function createWebsocketServer(httpServer: HttpServer) {
   const io = new Server(httpServer, {
@@ -14,6 +19,7 @@ export default function createWebsocketServer(httpServer: HttpServer) {
     console.log("A user connected");
 
     socket.on("disconnect", () => {
+      removeUser(socket.id);
       console.log("User disconnected");
     });
 
