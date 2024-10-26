@@ -38,9 +38,7 @@ export default function WebSocketPage() {
         const name = "noname";
         const position = { latitude, longitude };
         socket.emit("init", { name, position }); // 'init' イベントで送信
-        console.log(
-          "Sent location data to server : " + { latitude, longitude }
-        );
+        console.log("Sent location data to server:", latitude, longitude);
       } catch (err) {
         console.error(err);
       }
@@ -50,7 +48,6 @@ export default function WebSocketPage() {
     socket.on(
       "message",
       (name: string, addressHash: string, format: string, message: string) => {
-        console.log("ok");
         console.log("Received message: ", message);
         setMessageList((prev) => [...prev, message]);
       }
