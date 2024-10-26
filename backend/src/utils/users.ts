@@ -45,7 +45,7 @@ export const getLocalUser = (position: Position): User | null => {
       (user.position.latitude - position.latitude) ** 2 +
         (user.position.longitude - position.longitude) ** 2
     );
-    if (distance <= 0.005) {
+    if (distance <= 0.001) {
       localUsers.push({ ...user, dist: distance });
     }
   });
