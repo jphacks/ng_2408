@@ -12,7 +12,9 @@ import styles from "./page.module.scss";
 let socket: Socket;
 
 export default function WebSocketPage() {
-  const [messageList, setMessageList] = useState<[string, string][]>([]);
+  const [messageList, setMessageList] = useState<[string, string, string][]>(
+    []
+  );
   const [modalClosed, setModalClosed] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
   const [names, setNames] = useState<string[]>([]);
@@ -55,8 +57,8 @@ export default function WebSocketPage() {
     socket.on(
       "message",
       (name: string, addressHash: string, format: string, message: string) => {
-        console.log("Received messages: ", name, message);
-        setMessageList((prev) => [...prev, [name, message]]); // TODO: addressとformatも追加
+        console.log("Received messages: ", name, addressHash, message);
+        setMessageList((prev) => [...prev, [name, addressHash, message]]); // TODO: formatも追加
       }
     );
 
@@ -85,8 +87,13 @@ export default function WebSocketPage() {
         ))}
         <div>
           <h2>Received Messages: </h2>
-          {messageList.map(([senderName, message], index) => (
-            <Bubble key={index} senderName={senderName} message={message} />
+          {messageList.map(([senderName, addressHash, message], index) => (
+            <Bubble
+              key={index}
+              senderName={senderName}
+              addressHash={addressHash}
+              message={message}
+            />
           ))}
           <div ref={scrollBottomRef} />
         </div>
