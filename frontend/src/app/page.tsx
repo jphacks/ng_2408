@@ -96,12 +96,12 @@ export default function WebSocketPage() {
         name={name}
       />
       <div className={styles.messageList}>
-        <h2>Connected Users: </h2>
+        <h2>グループメンバー</h2>
         {names.map((name, index) => (
           <p key={index}>{name}</p>
         ))}
         <div>
-          <h2>Received Messages: </h2>
+          <h2>メッセージ</h2>
           {messageList.map((bubble, index) => (
             <Bubble key={index} bubble={bubble} />
           ))}
