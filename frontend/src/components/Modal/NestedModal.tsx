@@ -6,12 +6,14 @@ import TextField from "@mui/material/TextField";
 import styles from "./NestedModal.module.scss";
 
 interface NestedModalProps {
+  initWebSocket: () => void;
   setModalClosed: React.Dispatch<React.SetStateAction<boolean>>;
   setName: React.Dispatch<React.SetStateAction<string>>;
   name: string;
 }
 
 export default function NestedModal({
+  initWebSocket,
   setModalClosed,
   setName,
   name,
@@ -22,6 +24,7 @@ export default function NestedModal({
   const handleClose = () => {
     setOpen(false);
     setModalClosed((prev) => !prev);
+    initWebSocket();
   };
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {

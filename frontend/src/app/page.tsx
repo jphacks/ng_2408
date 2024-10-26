@@ -4,7 +4,7 @@
 import SendForm from "@/components/SendForm/SendForm";
 import NestedModal from "@/components/Modal/NestedModal";
 import { getCurrentPosition } from "@/utils/geolocation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import io, { Socket } from "socket.io-client";
 
 let socket: Socket;
@@ -14,7 +14,7 @@ export default function WebSocketPage() {
   const [modalClosed, setModalClosed] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
 
-  useEffect(() => {
+  const initWebSocket = () => {
     // 本番環境と開発環境で WebSocket サーバーの URL を変更する
     if (process.env.NODE_ENV === "production") {
       socket = io();
@@ -55,11 +55,12 @@ export default function WebSocketPage() {
     return () => {
       socket.disconnect();
     };
-  }, []);
+  };
 
   return (
     <>
       <NestedModal
+        initWebSocket={initWebSocket}
         setModalClosed={setModalClosed}
         setName={setName}
         name={name}
