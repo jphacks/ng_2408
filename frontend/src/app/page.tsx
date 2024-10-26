@@ -6,12 +6,13 @@ import NestedModal from "@/components/Modal/NestedModal";
 import { getCurrentPosition } from "@/utils/geolocation";
 import { useLayoutEffect, useRef, useState } from "react";
 import io, { Socket } from "socket.io-client";
+import Bubble from "@/components/Bubble/Bubble";
 import styles from "./page.module.scss";
 
 let socket: Socket;
 
 export default function WebSocketPage() {
-  const [messageList, setMessageList] = useState<string[]>([]);
+  const [messageList, setMessageList] = useState<[string, string][]>([]);
   const [modalClosed, setModalClosed] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
   const [names, setNames] = useState<string[]>([]);
@@ -54,8 +55,8 @@ export default function WebSocketPage() {
     socket.on(
       "message",
       (name: string, addressHash: string, format: string, message: string) => {
-        console.log("Received message: ", message);
-        setMessageList((prev) => [...prev, message]);
+        console.log("Received messages: ", name, message);
+        setMessageList((prev) => [...prev, [name, message]]); // TODO: addressとformatも追加
       }
     );
 
@@ -83,9 +84,9 @@ export default function WebSocketPage() {
           <p key={index}>{name}</p>
         ))}
         <div>
-          <h2>Received Message: </h2>
-          {messageList.map((message, index) => (
-            <p key={index}>{message}</p>
+          <h2>Received Messages: </h2>
+          {messageList.map(([senderName, message], index) => (
+            <Bubble key={index} senderName={senderName} message={message} />
           ))}
           <div ref={scrollBottomRef} />
         </div>
