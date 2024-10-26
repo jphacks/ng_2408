@@ -10,6 +10,13 @@ import {
   users,
 } from "../utils/users.js";
 
+const emitUpdate = (io: Server, groupId: number) => {
+  io.emit(
+    "update",
+    groups[groupId].map((socketId) => users[socketId].name)
+  );
+};
+
 export default function createWebsocketServer(httpServer: HttpServer) {
   const io = new Server(httpServer, {
     cors: {
@@ -21,6 +28,7 @@ export default function createWebsocketServer(httpServer: HttpServer) {
     console.log("A user connected");
 
     socket.on("disconnect", () => {
+      emitUpdate(io, users[socket.id].groupId);
       removeUser(socket.id);
       console.log("User disconnected");
     });
@@ -51,6 +59,8 @@ export default function createWebsocketServer(httpServer: HttpServer) {
         };
 
         setUser(socket.id, user);
+
+        emitUpdate(io, groupId);
       }
     );
 

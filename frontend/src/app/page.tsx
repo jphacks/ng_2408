@@ -13,6 +13,7 @@ export default function WebSocketPage() {
   const [messageList, setMessageList] = useState<string[]>([]);
   const [modalClosed, setModalClosed] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
+  const [names, setNames] = useState<string[]>([]);
 
   const initWebSocket = () => {
     // 本番環境と開発環境で WebSocket サーバーの URL を変更する
@@ -35,7 +36,6 @@ export default function WebSocketPage() {
           throw new Error("Failed to get location data");
         }
 
-        const name = "noname";
         const position = { latitude, longitude };
         socket.emit("init", { name, position }); // 'init' イベントで送信
         console.log("Sent location data to server:", latitude, longitude);
@@ -53,6 +53,10 @@ export default function WebSocketPage() {
       }
     );
 
+    socket.on("update", (names: string[]) => {
+      setNames(names);
+    });
+
     // クリーンアップ時にソケットを切断
     return () => {
       socket.disconnect();
@@ -68,7 +72,11 @@ export default function WebSocketPage() {
         name={name}
       />
       <div>
-        <label>Received Message: </label>
+        <h2>Connected Users: </h2>
+        {names.map((name, index) => (
+          <p key={index}>{name}</p>
+        ))}
+        <h2>Received Message: </h2>
         {messageList.map((message, index) => (
           <p key={index}>{message}</p>
         ))}
