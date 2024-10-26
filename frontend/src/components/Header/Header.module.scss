@@ -21,16 +21,9 @@
 
 .navigation {
   display: flex;
+  justify-content: space-around;
   width: 100%;
   padding: 0 !important;
-}
-
-.logo {
-  padding: 8px 100px 6px 100px;
-}
-
-.userNumber {
-  padding: 8px 100px 6px 100px;
 }
 
 .logoutButton {

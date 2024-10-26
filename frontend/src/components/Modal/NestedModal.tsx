@@ -41,8 +41,19 @@ export default function NestedModal({
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
-        <Box className={styles.modalBox}>
-          <h2 id="parent-modal-title">ニックネームを入力してください</h2>
+        <Box
+          className={styles.modalBox}
+          style={{
+            width: "90vw",
+            boxSizing: "border-box",
+            padding: "16px 22px 15px",
+            border: "none",
+            borderRadius: "15px",
+          }}
+        >
+          <h3 id="parent-modal-title" style={{ marginBottom: "0.5em" }}>
+            ニックネームを入力してください
+          </h3>
           <TextField
             label="Nickname"
             value={name}
