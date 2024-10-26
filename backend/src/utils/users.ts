@@ -23,14 +23,15 @@ export const removeUser = (socketId: string) => {
 };
 
 // idをauto incrementで返す
-const autoIncrement = () => {
-  let id = 0;
-  return () => id++;
+const counter = {
+  id: 0,
+  getId: function () {
+    return this.id++;
+  },
 };
-const getId = autoIncrement();
 
 export const createGroup = (): number => {
-  const groupId = getId();
+  const groupId = counter.getId();
   groups[groupId] = [];
   return groupId;
 };
