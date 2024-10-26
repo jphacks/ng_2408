@@ -1,5 +1,6 @@
 "use client"; // クライアントサイドで実行されることを明示する
 
+import NestedModal from "@/components/Modal/NestedModal";
 import { getCurrentPosition } from "@/utils/geolocation";
 import { useEffect, useState } from "react";
 import io, { Socket } from "socket.io-client";
@@ -9,6 +10,8 @@ let socket: Socket;
 export default function WebSocketPage() {
   const [messageList, setMessageList] = useState<string[]>([]);
   const [input, setInput] = useState<string>("");
+  const [modalClosed, setModalClosed] = useState<boolean>(false);
+  const [name, setName] = useState<string>("");
 
   useEffect(() => {
     // 本番環境と開発環境で WebSocket サーバーの URL を変更する
@@ -63,6 +66,11 @@ export default function WebSocketPage() {
 
   return (
     <div>
+      <NestedModal
+        setModalClosed={setModalClosed}
+        setName={setName}
+        name={name}
+      />
       <h1>WebSocket Client</h1>
       <div>
         <label>Received Message: </label>
