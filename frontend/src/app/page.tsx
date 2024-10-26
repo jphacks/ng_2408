@@ -4,8 +4,9 @@
 import SendForm from "@/components/SendForm/SendForm";
 import NestedModal from "@/components/Modal/NestedModal";
 import { getCurrentPosition } from "@/utils/geolocation";
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import io, { Socket } from "socket.io-client";
+import styles from "./page.module.scss";
 
 let socket: Socket;
 
@@ -14,6 +15,11 @@ export default function WebSocketPage() {
   const [modalClosed, setModalClosed] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
   const [names, setNames] = useState<string[]>([]);
+  const scrollBottomRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    scrollBottomRef?.current?.scrollIntoView();
+  });
 
   const initWebSocket = () => {
     // 本番環境と開発環境で WebSocket サーバーの URL を変更する
@@ -71,15 +77,18 @@ export default function WebSocketPage() {
         setName={setName}
         name={name}
       />
-      <div>
+      <div className={styles.messageList}>
         <h2>Connected Users: </h2>
         {names.map((name, index) => (
           <p key={index}>{name}</p>
         ))}
-        <h2>Received Message: </h2>
-        {messageList.map((message, index) => (
-          <p key={index}>{message}</p>
-        ))}
+        <div>
+          <h2>Received Message: </h2>
+          {messageList.map((message, index) => (
+            <p key={index}>{message}</p>
+          ))}
+          <div ref={scrollBottomRef} />
+        </div>
       </div>
       <SendForm socket={socket}></SendForm>
     </>
