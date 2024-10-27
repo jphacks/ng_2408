@@ -48,7 +48,9 @@ export const createInitEvent = (socket: Socket, io: Server) => {
       groupId = localUser.groupId;
     }
 
-    const ip = socket.handshake.address;
+    // const ip = socket.handshake.address;
+    // ここで4文字の数字と文字まぜまぜのランダムな文字列を生成してipとして定義
+    const ip = Math.random().toString(36).slice(-4);
     const addressHash = hashIPAddress(ip);
 
     const user: User = {
