@@ -9,7 +9,7 @@ export default function Header() {
     <header className={styles.header}>
       <div className={styles.navigationContainer}>
         <nav className={styles.navigation}>
-          <span className={styles.logo}>What&apos;s up?</span>
+          <span className={styles.logo}>What&apos;s up!</span>
           <span className={styles.userNumber}>users</span>
           <div
             className={styles.logoutButton}
