@@ -13,6 +13,7 @@ import {
   messageDownEventInterface,
   Position,
 } from "@/types/interface";
+import Header from "@/components/Header/Header";
 
 let socket: Socket;
 
@@ -111,27 +112,30 @@ export default function WebSocketPage() {
 
   return (
     <>
-      <NestedModal
-        initWebSocket={initWebSocket}
-        setModalClosed={setModalClosed}
-        setName={setName}
-        name={name}
-        position={position}
-      />
-      <div className={styles.messageList}>
-        <h2>グループメンバー</h2>
-        {names.map((name, index) => (
-          <p key={index}>{name}</p>
-        ))}
-        <div>
-          <h2>メッセージ</h2>
-          {messageList.map((bubble, index) => (
-            <Bubble key={index} bubble={bubble} />
+      <Header />
+      <main>
+        <NestedModal
+          initWebSocket={initWebSocket}
+          setModalClosed={setModalClosed}
+          setName={setName}
+          name={name}
+          position={position}
+        />
+        <div className={styles.messageList}>
+          <h2>グループメンバー</h2>
+          {names.map((name, index) => (
+            <p key={index}>{name}</p>
           ))}
-          <div ref={scrollBottomRef} />
+          <div>
+            <h2>メッセージ</h2>
+            {messageList.map((bubble, index) => (
+              <Bubble key={index} bubble={bubble} />
+            ))}
+            <div ref={scrollBottomRef} />
+          </div>
         </div>
-      </div>
-      <SendForm socket={socket}></SendForm>
+        <SendForm socket={socket}></SendForm>
+      </main>
     </>
   );
 }
