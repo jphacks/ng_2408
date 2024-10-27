@@ -11,8 +11,10 @@ import styles from "./page.module.scss";
 import {
   initEventInterface,
   messageDownEventInterface,
+  updateEventInterface,
   Position,
 } from "@/types/interface";
+import Header from "@/components/Header/Header";
 
 let socket: Socket;
 
@@ -22,7 +24,7 @@ export default function WebSocketPage() {
   );
   const [modalClosed, setModalClosed] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
-  const [names, setNames] = useState<string[]>([]);
+  const [users, setUsers] = useState<updateEventInterface[]>([]);
   const scrollBottomRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState<Position | null>(null);
 
@@ -99,8 +101,8 @@ export default function WebSocketPage() {
       }
     );
 
-    socket.on("update", (names: string[]) => {
-      setNames(names);
+    socket.on("update", (users: updateEventInterface[]) => {
+      setUsers(users);
     });
 
     // クリーンアップ時にソケットを切断
@@ -111,27 +113,25 @@ export default function WebSocketPage() {
 
   return (
     <>
-      <NestedModal
-        initWebSocket={initWebSocket}
-        setModalClosed={setModalClosed}
-        setName={setName}
-        name={name}
-        position={position}
-      />
-      <div className={styles.messageList}>
-        <h2>グループメンバー</h2>
-        {names.map((name, index) => (
-          <p key={index}>{name}</p>
-        ))}
-        <div>
-          <h2>メッセージ</h2>
-          {messageList.map((bubble, index) => (
-            <Bubble key={index} bubble={bubble} />
-          ))}
-          <div ref={scrollBottomRef} />
+      <Header users={users} />
+      <main>
+        <NestedModal
+          initWebSocket={initWebSocket}
+          setModalClosed={setModalClosed}
+          setName={setName}
+          name={name}
+          position={position}
+        />
+        <div className={styles.messageList}>
+          <div>
+            {messageList.map((bubble, index) => (
+              <Bubble key={index} bubble={bubble} />
+            ))}
+            <div ref={scrollBottomRef} />
+          </div>
         </div>
-      </div>
-      <SendForm socket={socket}></SendForm>
+        <SendForm socket={socket}></SendForm>
+      </main>
     </>
   );
 }

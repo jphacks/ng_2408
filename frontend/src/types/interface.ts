@@ -20,3 +20,8 @@ export interface initEventInterface {
   name: string;
   position: Position;
 }
+
+export interface updateEventInterface {
+  name: string;
+  addressHash: string;
+}

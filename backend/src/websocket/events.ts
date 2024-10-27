@@ -2,6 +2,7 @@ import { Server, Socket } from "socket.io";
 import {
   initEventInterface,
   messageDownEventInterface,
+  updateEventInterface,
   User,
 } from "../types/interface.js";
 import { hashIPAddress } from "../utils/hash.js";
@@ -18,7 +19,12 @@ const emitUpdate = (io: Server, groupId: number) => {
   groups[groupId].forEach((socketId: string) => {
     io.to(socketId).emit(
       "update",
-      groups[groupId].map((socketId) => users[socketId].name)
+      groups[groupId].map(
+        (socketId): updateEventInterface => ({
+          name: users[socketId].name,
+          addressHash: users[socketId].addressHash,
+        })
+      )
     );
   });
 };

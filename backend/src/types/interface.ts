@@ -22,3 +22,8 @@ export interface messageDownEventInterface {
   message: string;
   isSelfMessage: boolean;
 }
+
+export interface updateEventInterface {
+  name: string;
+  addressHash: string;
+}

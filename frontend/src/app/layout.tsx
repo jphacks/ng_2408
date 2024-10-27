@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "@/styles/style.scss";
 import React from "react";
-import Header from "@/components/Header/Header";
 
 export const metadata: Metadata = {
   title: "What's Up!",
@@ -22,10 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
-      <body>
-        <Header />
-        <main>{children}</main>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
