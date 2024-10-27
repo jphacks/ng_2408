@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import { Socket } from "socket.io-client";
 import styles from "./SendForm.module.scss";
+import { IoIosSend } from "react-icons/io";
+import TextField from "@mui/material/TextField"; // TextFieldをインポート
 
 interface SendFormProps {
   socket: Socket;
@@ -21,18 +23,32 @@ export default function SendForm({ socket }: SendFormProps) {
 
   return (
     <div className={styles.sendForm}>
-      <input
-        type="text"
+      <TextField
         value={input}
         onChange={(e) => setInput(e.target.value)}
-        placeholder="Enter a message"
+        style={{ marginRight: "5px" }}
+        placeholder="メッセージを入力"
         onKeyPress={(e) => {
           if (e.key === "Enter") {
             sendMessage(); // Enterキーが押されたときにメッセージを送信
           }
         }}
+        fullWidth
+        variant="outlined"
+        margin="normal"
       />
-      <button onClick={sendMessage}>送信</button>
+      <div
+        onClick={sendMessage}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          zoom: 1.8,
+          marginTop: "5px",
+        }}
+      >
+        <IoIosSend />
+      </div>
     </div>
   );
 }
