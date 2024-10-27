@@ -28,7 +28,7 @@ Webアプリに表示名を入力するだけでチャットを開始できる�
 ### 今後の展望
 
 ### 注力したこと（こだわり等）
-* 
+* Webページにアクセスしてから、チャットを始めるまでの手軽さ
 * 
 
 ## 開発技術
@@ -44,7 +44,6 @@ Webアプリに表示名を入力するだけでチャットを開始できる�
 <!-- * 独自で開発したものの内容をこちらに記載してください -->
 <!-- * 特に力を入れた部分をファイルリンク、またはcommit_idを記載してください。 -->
 * WebSocket通信と位置情報を活用したユーザーのグルーピング
-  * ここにファイルリンク貼る
-  * websocket.ts
-  * user.ts  
-* 他になにかありますか？
+  * https://github.com/jphacks/ng_2408/blob/main/backend/src/websocket/websocket.ts
+  * https://github.com/jphacks/ng_2408/blob/main/backend/src/websocket/events.ts
+* 
