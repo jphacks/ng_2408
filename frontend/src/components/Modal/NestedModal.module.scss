@@ -10,6 +10,7 @@
   transform: translate(-50%, -50%);
 }
 
-.modalButton {
+.modalButtonContainer {
+  display: flex;
   float: right;
 }

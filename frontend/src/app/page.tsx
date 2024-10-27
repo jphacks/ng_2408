@@ -4,13 +4,14 @@
 import SendForm from "@/components/SendForm/SendForm";
 import NestedModal from "@/components/Modal/NestedModal";
 import { getCurrentPosition } from "@/utils/geolocation";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import io, { Socket } from "socket.io-client";
 import Bubble from "@/components/Bubble/Bubble";
 import styles from "./page.module.scss";
 import {
   initEventInterface,
   messageDownEventInterface,
+  Position,
 } from "@/types/interface";
 
 let socket: Socket;
@@ -23,10 +24,30 @@ export default function WebSocketPage() {
   const [name, setName] = useState<string>("");
   const [names, setNames] = useState<string[]>([]);
   const scrollBottomRef = useRef<HTMLDivElement>(null);
+  const [position, setPosition] = useState<Position | null>(null);
 
   useLayoutEffect(() => {
     scrollBottomRef?.current?.scrollIntoView();
   });
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const currentPosition = await getCurrentPosition();
+        const latitude = currentPosition?.coords.latitude;
+        const longitude = currentPosition?.coords.longitude;
+
+        if (!latitude || !longitude) {
+          throw new Error("Failed to get location data");
+        }
+
+        setPosition({ latitude, longitude });
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    fetchData();
+  }, []);
 
   const initWebSocket = () => {
     // 本番環境と開発環境で WebSocket サーバーの URL を変更する
@@ -40,26 +61,17 @@ export default function WebSocketPage() {
     socket.on("connect", async () => {
       console.log("Connected to WebSocket server");
 
-      try {
-        const currentPosition = await getCurrentPosition();
-        const latitude = currentPosition?.coords.latitude;
-        const longitude = currentPosition?.coords.longitude;
-
-        if (!latitude || !longitude) {
-          throw new Error("Failed to get location data");
-        }
-
-        const position = { latitude, longitude };
-
-        const initData: initEventInterface = {
-          name,
-          position,
-        };
-        socket.emit("init", initData); // 'init' イベントで送信
-        console.log("Sent location data to server:", latitude, longitude);
-      } catch (err) {
-        console.error(err);
+      if (!position) {
+        console.error("Failed to get location data");
+        return;
       }
+
+      const initData: initEventInterface = {
+        name,
+        position,
+      };
+      socket.emit("init", initData); // 'init' イベントで送信
+      console.log("Sent location data to server:", position);
     });
 
     // 'message' イベントをリッスンして、メッセージを受信
@@ -104,6 +116,7 @@ export default function WebSocketPage() {
         setModalClosed={setModalClosed}
         setName={setName}
         name={name}
+        position={position}
       />
       <div className={styles.messageList}>
         <h2>グループメンバー</h2>
