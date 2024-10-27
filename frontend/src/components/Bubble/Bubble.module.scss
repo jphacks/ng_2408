@@ -6,6 +6,65 @@
   color: #969696;
 }
 
+.bubble {
+  width: 100%;
+  margin: 8px 0;
+  overflow: hidden;
+}
+
+.bubble .chat {
+  width: 100%;
+  text-align: left;
+}
+
+.userData {
+  text-align: left;
+}
+
+.message,
+.myMessage {
+  position: relative;
+  display: inline-block;
+  max-width: 250px;
+  padding: 10px 12px;
+  border-radius: 25px;
+  P {
+    padding: 0;
+    margin: 0;
+    font-size: 18px;
+    overflow-wrap: break-word;
+  }
+}
+
 .message {
-  overflow-wrap: break-word;
+  margin: 0 0 0 10px;
+  background: var(--bubble-color);
+  &:after {
+    position: absolute;
+    top: 3px;
+    left: -19px;
+    display: inline-block;
+    content: "";
+    border: 8px solid transparent;
+    border-right: 18px solid var(--bubble-color);
+    -webkit-transform: rotate(35deg);
+    transform: rotate(35deg);
+  }
+}
+
+.myMessage {
+  float: right;
+  max-width: 250px;
+  margin: 0 10px 0 10px;
+  background: var(--my-bubble-color);
+  p:after {
+    position: absolute;
+    top: 3px;
+    right: -19px;
+    content: "";
+    border: 8px solid transparent;
+    border-left: 18px solid var(--my-bubble-color);
+    -webkit-transform: rotate(-35deg);
+    transform: rotate(-35deg);
+  }
 }

@@ -3,8 +3,21 @@
   min-height: 40px;
   margin: 3px auto 35px auto;
   input {
-    width: min(80vw, 500px);
+    width: min(75vw, 500px);
     padding: 8px 8px 6px;
     font-size: 18px;
+  }
+}
+
+.textField {
+  margin: 5px 0 0 0;
+  > div {
+    height: 45px;
+    background: white;
+    border-radius: 20px;
+    > input {
+      padding: 0;
+      margin: 8px 15px 6px;
+    }
   }
 }

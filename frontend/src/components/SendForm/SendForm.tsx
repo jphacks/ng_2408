@@ -25,8 +25,8 @@ export default function SendForm({ socket }: SendFormProps) {
     <div className={styles.sendForm}>
       <TextField
         value={input}
+        className={styles.textField}
         onChange={(e) => setInput(e.target.value)}
-        style={{ marginRight: "5px" }}
         placeholder="メッセージを入力"
         onKeyPress={(e) => {
           if (e.key === "Enter") {
