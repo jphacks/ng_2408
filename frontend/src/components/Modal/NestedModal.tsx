@@ -71,7 +71,7 @@ export default function NestedModal({
             fullWidth
             margin="normal"
           />
-          <p style={{ color: "#757575", margin: 0 }}>ex. お名前#a1b2</p>
+          <p style={{ color: "#757575", margin: 0 }}>ex. お名前 #a1b2</p>
           <div className={styles.modalButtonContainer}>
             {position === null && (
               <p style={{ color: "#ff2222", fontSize: "12px" }}>
