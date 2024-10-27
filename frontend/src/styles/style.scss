@@ -1,5 +1,7 @@
 :root {
   --header-height: 60px;
+  --bubble-color: #9edbff;
+  --my-bubble-color: #3af849;
 }
 
 html {
@@ -15,8 +17,8 @@ body {
     "Segoe UI Symbol", "Noto Color Emoji";
   background: linear-gradient(
     0deg,
-    rgb(181, 239, 249) 10.5%,
-    rgb(254, 254, 254) 86.8%
+    rgb(177, 244, 255) 10.5%,
+    rgb(231 255 247) 86.8%
   );
 }
 
