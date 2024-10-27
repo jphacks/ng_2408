@@ -17,6 +17,7 @@ export default function Header({ users }: HeaderProps) {
           <UserList users={users} />
           <div
             className={styles.logoutButton}
+            style={{ paddingTop: "12px" }}
             onClick={() => window.location.reload()}
           >
             <ImExit />

@@ -22,7 +22,7 @@ export default function UserList({ users }: UserListProps) {
         modalOpen={open}
         setModalOpen={setOpen}
       />
-      <IconButton onClick={handleClick}>
+      <IconButton onClick={handleClick} style={{ paddingTop: "13px" }}>
         <Badge badgeContent={users.length} color="secondary">
           <PersonIcon />
         </Badge>

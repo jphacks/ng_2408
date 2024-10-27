@@ -46,7 +46,6 @@ export default function UserListModal({
             borderRadius: "15px",
             backgroundColor: "white",
             margin: "auto",
-            marginTop: "20vh",
           }}
         >
           <Typography variant="h6" id="user-list-modal-title">
