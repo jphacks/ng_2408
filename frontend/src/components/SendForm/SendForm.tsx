@@ -44,7 +44,6 @@ export default function SendForm({ socket }: SendFormProps) {
           flexDirection: "column",
           justifyContent: "center",
           zoom: 1.8,
-          marginTop: "5px",
         }}
       >
         <IoIosSend />
