@@ -74,7 +74,7 @@ export default function NestedModal({
             onClick={handleClose}
             disabled={name === ""}
           >
-            送信
+            接続
           </Button>
         </Box>
       </Modal>
