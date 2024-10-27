@@ -64,4 +64,4 @@ https://www.youtube.com/watch?v=0CxI8DH2g2M
 * WebSocket通信と位置情報を活用したユーザーのグルーピング
   * https://github.com/jphacks/ng_2408/blob/main/backend/src/websocket/websocket.ts
   * https://github.com/jphacks/ng_2408/blob/main/backend/src/websocket/events.ts
-* 
+
