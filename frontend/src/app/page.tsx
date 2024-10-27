@@ -8,12 +8,17 @@ import { useLayoutEffect, useRef, useState } from "react";
 import io, { Socket } from "socket.io-client";
 import Bubble from "@/components/Bubble/Bubble";
 import styles from "./page.module.scss";
-import { MessageInterface } from "@/types/interface";
+import {
+  initEventInterface,
+  messageDownEventInterface,
+} from "@/types/interface";
 
 let socket: Socket;
 
 export default function WebSocketPage() {
-  const [messageList, setMessageList] = useState<MessageInterface[]>([]);
+  const [messageList, setMessageList] = useState<messageDownEventInterface[]>(
+    []
+  );
   const [modalClosed, setModalClosed] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
   const [names, setNames] = useState<string[]>([]);
@@ -45,7 +50,12 @@ export default function WebSocketPage() {
         }
 
         const position = { latitude, longitude };
-        socket.emit("init", { name, position }); // 'init' イベントで送信
+
+        const initData: initEventInterface = {
+          name,
+          position,
+        };
+        socket.emit("init", initData); // 'init' イベントで送信
         console.log("Sent location data to server:", latitude, longitude);
       } catch (err) {
         console.error(err);
@@ -55,13 +65,13 @@ export default function WebSocketPage() {
     // 'message' イベントをリッスンして、メッセージを受信
     socket.on(
       "message",
-      (
-        senderName: string,
-        addressHash: string,
-        format: string,
-        message: string,
-        isSelfMessage: boolean
-      ) => {
+      ({
+        name: senderName,
+        addressHash,
+        format,
+        message,
+        isSelfMessage,
+      }: messageDownEventInterface) => {
         console.log(
           "Received messages: ",
           senderName,
@@ -72,7 +82,7 @@ export default function WebSocketPage() {
         );
         setMessageList((prev) => [
           ...prev,
-          { senderName, addressHash, format, message, isSelfMessage },
+          { name: senderName, addressHash, format, message, isSelfMessage },
         ]);
       }
     );

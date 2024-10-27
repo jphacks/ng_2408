@@ -5,7 +5,7 @@
  */
 import app from "../app.js";
 import http from "http";
-import createWebsocketServer from "./websocket.js";
+import createWebsocketServer from "../websocket/websocket.js";
 
 /**
  * Get port from environment and store in Express.
@@ -21,7 +21,7 @@ const httpServer = http.createServer(app);
 /**
  * Create Socket.io server.
  */
-const io = createWebsocketServer(httpServer);
+createWebsocketServer(httpServer);
 
 /**
  * Listen on provided port, on all network interfaces.

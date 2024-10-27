@@ -9,3 +9,16 @@ export interface User {
   groupId: number;
   addressHash: string;
 }
+
+export interface initEventInterface {
+  name: string;
+  position: Position;
+}
+
+export interface messageDownEventInterface {
+  name: string;
+  addressHash: string;
+  format: string;
+  message: string;
+  isSelfMessage: boolean;
+}
