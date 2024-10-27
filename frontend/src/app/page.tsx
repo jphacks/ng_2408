@@ -11,6 +11,7 @@ import styles from "./page.module.scss";
 import {
   initEventInterface,
   messageDownEventInterface,
+  updateEventInterface,
   Position,
 } from "@/types/interface";
 import Header from "@/components/Header/Header";
@@ -23,7 +24,7 @@ export default function WebSocketPage() {
   );
   const [modalClosed, setModalClosed] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
-  const [names, setNames] = useState<string[]>([]);
+  const [users, setUsers] = useState<updateEventInterface[]>([]);
   const scrollBottomRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState<Position | null>(null);
 
@@ -100,8 +101,8 @@ export default function WebSocketPage() {
       }
     );
 
-    socket.on("update", (names: string[]) => {
-      setNames(names);
+    socket.on("update", (users: updateEventInterface[]) => {
+      setUsers(users);
     });
 
     // クリーンアップ時にソケットを切断
@@ -112,7 +113,7 @@ export default function WebSocketPage() {
 
   return (
     <>
-      <Header />
+      <Header users={users} />
       <main>
         <NestedModal
           initWebSocket={initWebSocket}
@@ -122,12 +123,7 @@ export default function WebSocketPage() {
           position={position}
         />
         <div className={styles.messageList}>
-          <h2>グループメンバー</h2>
-          {names.map((name, index) => (
-            <p key={index}>{name}</p>
-          ))}
           <div>
-            <h2>メッセージ</h2>
             {messageList.map((bubble, index) => (
               <Bubble key={index} bubble={bubble} />
             ))}

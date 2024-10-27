@@ -1,16 +1,20 @@
-"use client";
-
 import React from "react";
 import styles from "./Header.module.scss";
 import { ImExit } from "react-icons/im";
+import UserList from "./UserList/UserList";
+import { updateEventInterface } from "@/types/interface";
 
-export default function Header() {
+interface HeaderProps {
+  users: updateEventInterface[];
+}
+
+export default function Header({ users }: HeaderProps) {
   return (
     <header className={styles.header}>
       <div className={styles.navigationContainer}>
         <nav className={styles.navigation}>
           <span className={styles.logo}>What&apos;s up!</span>
-          <span className={styles.userNumber}>users</span>
+          <UserList users={users} />
           <div
             className={styles.logoutButton}
             onClick={() => window.location.reload()}
