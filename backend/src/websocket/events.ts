@@ -48,9 +48,12 @@ export const createInitEvent = (socket: Socket, io: Server) => {
       groupId = localUser.groupId;
     }
 
-    // const ip = socket.handshake.address;
-    // ここで4文字の数字と文字まぜまぜのランダムな文字列を生成してipとして定義
-    const ip = Math.random().toString(36).slice(-4);
+    const ipHeader = socket.handshake.headers["x-forwarded-for"];
+    const ip = Array.isArray(ipHeader)
+      ? ipHeader[0]
+      : ipHeader
+        ? ipHeader.split(",")[0]
+        : socket.handshake.address;
     const addressHash = hashIPAddress(ip);
 
     const user: User = {
