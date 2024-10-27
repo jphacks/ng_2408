@@ -31,6 +31,7 @@ export default function Bubble({
           <div className={styles.userData} style={{ textAlign: "left" }}>
             <span className={styles.name}>{bubble.name}</span>
             <span className={styles.hash}>
+              {" "}
               #{bubble.addressHash.slice(0, 4)}
             </span>
           </div>
