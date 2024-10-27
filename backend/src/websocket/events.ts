@@ -15,10 +15,12 @@ import {
 } from "../utils/users.js";
 
 const emitUpdate = (io: Server, groupId: number) => {
-  io.emit(
-    "update",
-    groups[groupId].map((socketId) => users[socketId].name)
-  );
+  groups[groupId].forEach((socketId: string) => {
+    io.to(socketId).emit(
+      "update",
+      groups[groupId].map((socketId) => users[socketId].name)
+    );
+  });
 };
 
 export const createInitEvent = (socket: Socket, io: Server) => {
